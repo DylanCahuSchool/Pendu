@@ -19,7 +19,7 @@ namespace PenduEnMieux
             return "test";
         }
 
-        public static void checkGuess(char guess)
+        public static bool checkGuess(char guess)
         {
             if (word.Contains(guess))
             {
@@ -27,7 +27,6 @@ namespace PenduEnMieux
                 {
                     if (word[i] == guess)
                     {
-                        Program.form1.Display(i, guess);
                         goodGuessesCount++;
                     }
                 }
@@ -47,6 +46,7 @@ namespace PenduEnMieux
                     Program.form1.lose();
                 }
             }
+            return word.Contains(guess);
         }
 
     }

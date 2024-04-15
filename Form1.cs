@@ -17,9 +17,9 @@ namespace PenduEnMieux
                 entry.Location = new Point(10 + i * 20, 10);
                 entry.Name = "entry" + i.ToString();
                 entry.Size = new Size(20, 20);
-                this.Controls.Add(entry);
                 entry.Enabled = false;
                 entry.BackColor = Color.Black;
+                this.Controls.Add(entry);
             }
 
             //guess textbox on the bottom
@@ -54,51 +54,36 @@ namespace PenduEnMieux
                 return;
             }
 
+
+            for(int i = 0; i < GameEngine.word.Length; i++)
+            {
+                if (GameEngine.word[i] == guessChar)
+                {
+                    Control c = this.Controls.Find("entry" + i.ToString(), true)[0];
+                    c.Text = guessChar.ToString();
+                    c.BackColor = Color.White;
+                }
+            }
+
             GameEngine.checkGuess(guessChar);
+
             //reset the guess textbox
             this.Controls.Find("guess", true)[0].Text = "";
  
         }
 
-        public void Display(int index, char guess)
-        {
-            this.Controls.Find("entry" + index.ToString(), true)[0].Text = guess.ToString();
-            this.Controls.Find("entry" + index.ToString(), true)[0].BackColor = Color.White;
-
-        }
-
-            public void win()
+        public void win()
         {
             MessageBox.Show("You won!");
-            this.Controls.Remove(this.Controls.Find("guessButton", true)[0]);
-            //add restart button
-            Button restartButton = new Button();
-            restartButton.Name = "restartButton";
-            restartButton.Size = new Size(100, 50);
-            restartButton.Location = new Point(30, 100);
-            restartButton.Text = "Restart";
-            restartButton.Click += new EventHandler(restartButton_Click);
-            this.Controls.Add(restartButton);
+            Application.Restart();
+           
         }
 
         public void lose()
         {
             MessageBox.Show("You lost!");
-            this.Controls.Remove(this.Controls.Find("guessButton", true)[0]);
-            //add restart button
-            Button restartButton = new Button();
-            restartButton.Name = "restartButton";
-            restartButton.Size = new Size(100, 50);
-            restartButton.Location = new Point(30, 100);
-            restartButton.Text = "Restart";
-            restartButton.Click += new EventHandler(restartButton_Click);
-            this.Controls.Add(restartButton);
-        }
-
-
-        private void restartButton_Click(object sender, EventArgs e)
-        {
             Application.Restart();
-        }   
+
+        } 
     }
 }
