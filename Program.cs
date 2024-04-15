@@ -6,7 +6,8 @@ namespace PenduEnMieux
         ///  The main entry point for the application.
         /// </summary>
         static public Form1 form1;
-        /// 
+        static public GameEngine gameEngine;
+
         [STAThread]
         static void Main()
         {
@@ -14,6 +15,7 @@ namespace PenduEnMieux
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             form1 = new Form1();
+            gameEngine = new GameEngine();
             Application.Run(new Form1());
         }
     }

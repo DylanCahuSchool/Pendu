@@ -9,17 +9,17 @@ namespace PenduEnMieux
     public class GameEngine
     {
 
-        public static int wrongGuesses = 0;
-        public static int maxWrongGuesses = 6;
-        public static int goodGuessesCount;
-        public static string word = getStartWord();
+        public int wrongGuesses = 0;
+        public int maxWrongGuesses = 6;
+        public int goodGuessesCount;
+        public string word = getStartWord();
 
         public static string getStartWord()
         {
             return "test";
         }
 
-        public static bool checkGuess(char guess)
+        public bool checkGuess(char guess)
         {
             if (word.Contains(guess))
             {

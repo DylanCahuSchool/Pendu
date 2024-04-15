@@ -11,7 +11,7 @@ namespace PenduEnMieux
         private void Form1_Load(object sender, EventArgs e)
         {
             
-            for (int i = 0; i < GameEngine.word.Length; i++)
+            for (int i = 0; i < Program.gameEngine.word.Length; i++)
             {
                 TextBox entry = new TextBox();
                 entry.Location = new Point(10 + i * 20, 10);
@@ -46,7 +46,10 @@ namespace PenduEnMieux
             char guessChar;
             try
             {
-                guessChar = this.Controls.Find("guess", true)[0].Text[0];
+
+                string c = this.Controls.Find("guess", true)[0].Text;
+                string lower = c.ToLower();
+                guessChar = lower[0];
             }
             catch (Exception)
             {
@@ -55,9 +58,9 @@ namespace PenduEnMieux
             }
 
 
-            for(int i = 0; i < GameEngine.word.Length; i++)
+            for(int i = 0; i < Program.gameEngine.word.Length; i++)
             {
-                if (GameEngine.word[i] == guessChar)
+                if (Program.gameEngine.word[i] == guessChar)
                 {
                     Control c = this.Controls.Find("entry" + i.ToString(), true)[0];
                     c.Text = guessChar.ToString();
@@ -65,7 +68,7 @@ namespace PenduEnMieux
                 }
             }
 
-            GameEngine.checkGuess(guessChar);
+            Program.gameEngine.checkGuess(guessChar);
 
             //reset the guess textbox
             this.Controls.Find("guess", true)[0].Text = "";
