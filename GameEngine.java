@@ -8,20 +8,19 @@ package com.dylan_cahu.pendu;
  *
  * @author Utilisateur
  */
-import java.util.Scanner;
-
 public class GameEngine {
-    public static int wrongGuesses = 0;
-    public static int maxWrongGuesses = 6;
-    public static int goodGuessesCount;
-    public static String word = getStartWord();
-    public static boolean[] guessedTab = new boolean[word.length()];
+    
+    public  int wrongGuesses = 0;
+    public  int maxWrongGuesses = 6;
+    public  int goodGuessesCount;
+    public  String word = getStartWord();
+    public  boolean[] guessedTab = new boolean[word.length()];
 
-    public static String getStartWord() {
+    public  String getStartWord() {
         return "test";
     }
 
-    public static boolean checkGuess(char guess) {
+    public  boolean checkGuess(char guess) {
         if (word.contains(String.valueOf(guess))) {
             for (int i = 0; i < word.length(); i++) {
                 if (word.charAt(i) == guess) {
@@ -46,7 +45,7 @@ public class GameEngine {
         return word.contains(String.valueOf(guess));
     }
 
-public static String getMaskedWord() {
+public  String getMaskedWord() {
     StringBuilder maskedWord = new StringBuilder();
     for (int i = 0; i < word.length(); i++) {
         char c = word.charAt(i);
@@ -60,16 +59,6 @@ public static String getMaskedWord() {
 }
 
     public void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("Guess the word!");
-            System.out.println("You have " + (maxWrongGuesses - wrongGuesses) + " guesses left.");
-            System.out.println("Current status: " + getMaskedWord());
-            System.out.print("Enter your guess: ");
-            char guess = scanner.next().charAt(0);
-
-            checkGuess(guess);
-        }
-    }
+ 
+}
 }

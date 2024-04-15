@@ -4,14 +4,27 @@
  */
 package com.dylan_cahu.pendu;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Utilisateur
  */
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         GameEngine game = new GameEngine();
-        game.main(args); // Start the game
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Guess the word!");
+            System.out.println("You have " + (game.maxWrongGuesses - game.wrongGuesses) + " guesses left.");
+            System.out.println("Current status: " + game.getMaskedWord());
+            System.out.print("Enter your guess: ");
+            char guess = scanner.next().charAt(0);
+
+            game.checkGuess(guess);
+        }
     }
 }
-
