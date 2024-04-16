@@ -15,7 +15,10 @@ public class GameEngine {
     public  int goodGuessesCount;
     public  String word = getStartWord();
     public  boolean[] guessedTab = new boolean[word.length()];
-
+    public boolean isWin = false;
+    public boolean isLose = false;
+    public boolean canPlay = true;
+    
     public  String getStartWord() {
         return "test";
     }
@@ -30,35 +33,31 @@ public class GameEngine {
             }
 
             if (goodGuessesCount == word.length()) {
-                System.out.println("Congratulations! You win!");
-                System.exit(0); // End the program after winning
+                canPlay = false;
+                isWin = true;
             }
         } else {
             wrongGuesses++;
-            System.out.println("Incorrect!");
+            
 
             if (wrongGuesses == maxWrongGuesses) {
-                System.out.println("You lose! The word was: " + word);
-                System.exit(0); // End the program after losing
+                canPlay = false;
+                isLose = false;
             }
         }
         return word.contains(String.valueOf(guess));
     }
 
-public  String getMaskedWord() {
-    StringBuilder maskedWord = new StringBuilder();
-    for (int i = 0; i < word.length(); i++) {
-        char c = word.charAt(i);
-        if (c == ' ' || guessedTab[i] == true) {
-            maskedWord.append(c);
-        } else {
-            maskedWord.append('*');
+    public  String getMaskedWord() {
+        StringBuilder maskedWord = new StringBuilder();
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (c == ' ' || guessedTab[i] == true) {
+                maskedWord.append(c);
+            } else {
+                maskedWord.append('*');
+            }
         }
+        return maskedWord.toString();
     }
-    return maskedWord.toString();
-}
-
-    public void main(String[] args) {
- 
-}
 }
