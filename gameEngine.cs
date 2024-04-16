@@ -9,39 +9,59 @@ namespace PenduConsole
 {
     public class gameEngine
     {
-        //public int wrongGuesses = 0;
-        //public int maxWrongGuesses = 6;
-        public int goodGuessesCount;
+        public int GoodGuessesCount { get; private set; }
         private string word;
         private bool[] guessedLetters;
-        public bool isWin = false;
-        public bool isLose = false;
-        public bool canPlay = true;
-        public int activePlayerIndex = 0;
-        Player[] players = new Player[1];
+        public bool CanPlay { get; private set; } = true;
+        public bool IsWin { get; private set; } = false;
+        public bool IsLose { get; private set; } = false;
+        public int ActivePlayerIndex { get; private set; } = 0;
+        private Player[] players;
 
         // Constructor
         public gameEngine(Player[] addPlayers)
         {
             word = getStartWord();
             guessedLetters = new bool[word.Length];
-            foreach (Player player in addPlayers)
-            {
-                Array.Resize(ref players, players.Length + 1);
-            }
+            players = addPlayers;
         }
 
         public Player getActivePlayer()
         {
-            return players[activePlayerIndex];
+            return players[ActivePlayerIndex];
+        }
+
+        public bool activePlayerHasLife()
+        {
+            return getActivePlayer().getLife() > 0;
         }
 
         private void switchPlayer()
         {
-            activePlayerIndex++;
-            if (activePlayerIndex >= players.Length)
+            ActivePlayerIndex++;
+            if (ActivePlayerIndex >= players.Length -1)
             {
-                activePlayerIndex = 0;
+                ActivePlayerIndex = 0;
+            }
+            if (activePlayerHasLife() == false)
+            {
+                int cptPerdant=0;
+
+                for (int i=0 ; i < players.Length -1; i++)
+                {
+                    if(players[i].getLife() == 0)
+                    {
+                        cptPerdant++;
+                    }
+                }
+                if (cptPerdant == players.Length-1)
+                {
+                    Lose();
+                }
+                else
+                {
+                    switchPlayer();
+                }
             }
         }
 
@@ -55,37 +75,56 @@ namespace PenduConsole
             return "test";
         }
 
-        public bool checkGuess(char guess)
+        public bool checkGuess(string guess)
         {
-            if (word.Contains(guess))
+            if (guess == "")
+            {
+                getActivePlayer().decreaseLife();
+                switchPlayer();
+                return false;
+            }
+            if (word.Contains(guess.ToLower()[0]))
             {
                 for (int i = 0; i < word.Length; i++)
                 {
-                    if (word[i] == guess)
+                    if (word[i] == guess.ToLower()[0])
                     {
-                        goodGuessesCount++;
-                        guessedLetters[i] = true;
+                        if (guessedLetters[i] == true)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            GoodGuessesCount++;
+                            guessedLetters[i] = true;
+                        }
                     }
                 }
 
-                if (goodGuessesCount == word.Length)
+                if (GoodGuessesCount == word.Length)
                 {
-                    canPlay = false;
-                    isWin = true;
+                    Win();
                 }
             }
             else
             {
-                wrongGuesses++;
-
-                if (wrongGuesses == maxWrongGuesses)
-                {
-                    canPlay = false;
-                    isLose = true;
-                }
+                getActivePlayer().decreaseLife();
             }
+
             switchPlayer();
             return word.Contains(guess);
+        }
+
+        public void Win()
+        {
+            CanPlay = false;
+            IsWin = true;
+        }
+
+        public void Lose()
+        {
+            CanPlay = false;
+            IsLose = true;
         }
 
         public string getMaskedWord()

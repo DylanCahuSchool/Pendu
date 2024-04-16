@@ -7,18 +7,19 @@ class Program
 {
     static void Main()
     {
-        gameEngine game = new gameEngine();
 
+        Player p1 = new Player("Player 1", 6);
+        Player p2 = new Player("Player 2", 6);
+        Player[] players = { p1, p2 };
+        gameEngine game = new gameEngine(players);
 
-        while (game.canPlay)
+        while (game.CanPlay)
         {
-
-
             Console.WriteLine("Guess the word!");
-            Console.WriteLine("You have " + (game.maxWrongGuesses - game.wrongGuesses) + " guesses left.");
+            Console.WriteLine(game.getActivePlayer().getName() +", you have " + game.getActivePlayer().getLife()  + " guesses left.");
             Console.WriteLine("Current status: " + game.getMaskedWord());
-            Console.WriteLine("Enter your guess: ");
-            char guess = Console.ReadLine().ToLower()[0];
+            Console.WriteLine(game.getActivePlayer().getName() + ". Enter your guess: ");
+            string guess = Console.ReadLine();
 
             if (game.checkGuess(guess) == false)
             {
@@ -30,12 +31,12 @@ class Program
             }
         }
 
-        if (game.canPlay == false && game.isLose)
+        if (game.CanPlay == false && game.IsLose)
         {
             Console.WriteLine("You lose! The word was: " + game.getWord());
             Console.ReadLine();
         }
-        else if (game.canPlay == false && game.isWin)
+        else if (game.CanPlay == false && game.IsWin)
         {
             Console.WriteLine("Congratulations! You win !  The word was: " + game.getWord());
             Console.ReadLine();
