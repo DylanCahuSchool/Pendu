@@ -9,20 +9,45 @@ namespace PenduConsole
 {
     public class gameEngine
     {
-        public int wrongGuesses = 0;
-        public int maxWrongGuesses = 6;
+        //public int wrongGuesses = 0;
+        //public int maxWrongGuesses = 6;
         public int goodGuessesCount;
-        public string word;
-        public bool[] guessedLetters;
+        private string word;
+        private bool[] guessedLetters;
         public bool isWin = false;
         public bool isLose = false;
         public bool canPlay = true;
+        public int activePlayerIndex = 0;
+        Player[] players = new Player[1];
 
         // Constructor
-        public gameEngine()
+        public gameEngine(Player[] addPlayers)
         {
             word = getStartWord();
             guessedLetters = new bool[word.Length];
+            foreach (Player player in addPlayers)
+            {
+                Array.Resize(ref players, players.Length + 1);
+            }
+        }
+
+        public Player getActivePlayer()
+        {
+            return players[activePlayerIndex];
+        }
+
+        private void switchPlayer()
+        {
+            activePlayerIndex++;
+            if (activePlayerIndex >= players.Length)
+            {
+                activePlayerIndex = 0;
+            }
+        }
+
+        public string getWord() 
+        {
+            return word;
         }
 
         public string getStartWord()
@@ -59,6 +84,7 @@ namespace PenduConsole
                     isLose = true;
                 }
             }
+            switchPlayer();
             return word.Contains(guess);
         }
 
@@ -86,4 +112,4 @@ namespace PenduConsole
             return maskedWord;
         }
     }
-   }
+}

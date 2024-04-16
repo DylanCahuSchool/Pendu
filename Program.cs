@@ -32,12 +32,12 @@ class Program
 
         if (game.canPlay == false && game.isLose)
         {
-            Console.WriteLine("You lose! The word was: " + game.word);
+            Console.WriteLine("You lose! The word was: " + game.getWord());
             Console.ReadLine();
         }
         else if (game.canPlay == false && game.isWin)
         {
-            Console.WriteLine("Congratulations! You win !  The word was: " + game.word);
+            Console.WriteLine("Congratulations! You win !  The word was: " + game.getWord());
             Console.ReadLine();
         }
     }
