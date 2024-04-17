@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace PenduConsole
+﻿namespace PenduConsole
 {
-    public class Player
+    public abstract class Player
     {
-        private string name;
-        private int life;
+        protected string name;
+        protected int life;
 
         public Player(string name, int life)
         {
@@ -32,5 +25,7 @@ namespace PenduConsole
         {
             life--;
         }
+
+        public abstract char ChooseLetter();
     }
 }
